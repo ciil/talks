@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>DSGVO - Alles Schall und Rauch?</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section><h2>DSGVO - Alles Schall und Rauch?</h2></section>
+                <section>
+                    <section><h3>Einführung - Rechtliche Grundlagen</h3>
+                    </section>
+                    <section><h3>Systematische Einordnung</h3>
+                        <ul>
+                            <li>früher: BDSG (deutsches Bundesgesetz)</li>
+                            <li>seit 25.05.2018: Datenschutz-Grundverordnung (DSGVO/GDPR) und BDSG-neu via DSAnpUG-EU<br>
+                                <small>voller Name: Verordnung (EU) 2016/679 des Europäischen Parlaments und des Rates vom 27. April 2016 zum Schutz natürlicher Personen bei der Verarbeitung personenbezogener Daten, zum freien Datenverkehr und zur Aufhebung der Richtlinie 95/46/EG (Datenschutz-Grundverordnung) (Text von Bedeutung für den EWR)</small>
+                            </li>
+                        </ul>
+                    </section>
+                    <section><h3>Was ist eine EU-Verordnung?</h3>
+                        <ul>
+                            <li>Es gibt EU-Richtlinien und EU-Verordnungen</li>
+                            <li>Richtlinien sind ... exactly what it says on the tin. Mehr oder weniger grobe Richtlinien, die jeder EU-Mitgliedsstaat selbst implementiert</li>
+                            <li>Verordnungen gelten direkt in allen Mitgliedsstaaten</li>
+                            <li>Alle 24 Versionen in den <a href="https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32016R0679">24 Amtssprachen</a> gelten gleichberechtigt überall (what could possibly go wrong?)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Aufbau DSGVO</h3>
+                        <ul>
+                            <li>Am Anfang stehen 173 sog. "Erwägungsgründe"</li>
+                            <li>Dann gibt es 99 Artikel in 11 Kapiteln</li>
+                            <li>Die "wichtigsten" Abschnitte: Kapitel 2 ("Grundsätze") und Kapitel 4 ("Verantwortlicher und Auftragsverarbeiter")</li>
+                            <li>Eine recht schöne Übersicht über die deutsche Fassung der DSGVO gibt es unter <a href="https://dsgvo-gesetz.de">dsgvo-gesetz.de</a></li>
+                        </ul>
+                    </section>
+                    <section><h3>Geltungsbereich</h3>
+                        <ul>
+                            <li>Datenschutzrecht bezieht sich <b>immer und ausschließlich</b> auf "personenbezogene Daten"</li>
+                            <li>Personenbezug liegt aber fast immer vor, wenn zumindest <b>irgendjemand</b> in der Lage ist, ein Datum einer natürlichen Person zuzuordnen (bekanntes Beispiel: IP-Adressen)</li>
+                            <li>Gilt für alle Verarbeitungen, die entweder in der EU stattfinden, oder die Daten von EU-Bürgern betreffen.</li>
+                        </ul>
+                    </section>
+                    <section><h3>Verarbeitung</h3>
+                        <ul>
+                            <li><small>bezeichnet "jeden mit oder ohne Hilfe automatisierter Verfahren ausgeführten Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten wie das Erheben, das Erfassen, die Organisation, das Ordnen, die Speicherung, die Anpassung oder Veränderung, das Auslesen, das Abfragen, die Verwendung, die Offenlegung durch Übermittlung, Verbreitung oder eine andere Form der Bereitstellung, den Abgleich oder die Verknüpfung, die Einschränkung, das Löschen oder die Vernichtung"</small></li>
+                            <li>(vgl. BDSG a.F.: Erhebung, Verarbeitung, Nutzung)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Frage: Muss ich bei meiner App die DSGVO beachten?</h3>
+                    </section>
+                    <section><h3>Antwort: Ja.</h3>
+                        <p class="fragment"><small>Ausnahme: Statischer Content ohne Interaktionsmöglichkeit und keinerlei Logging.</small></p>
+                    </section>
+                    <section><h3>Frage: Aber was wir entwickeln, wird nur intern von Mitarbeitern des Kunden genutzt. Da gilt die DSGVO also dann nicht?</h3>
+                    </section>
+                    <section><h3>Antwort: Doch.</h3>
+                        <p class="fragment"><small>Mitarbeiterdaten sind personenbezogene Daten. Selbst Kürzel/IDs/etc. sind personebezogene Daten, weil der Kunde sicher irgendwo die Möglichkeit hat, die ID einem Mitarbeiter zuzuordnen.</small></p>
+                    </section>
+                    <section><h3>Frage: Alle Daten und Logik liegen auf AWS in einer US-Region. Wir pushen nur Code. Zumindest da gilt aber die DSGVO dann nicht?</h3>
+                    </section>
+                    <section><h3>Antwort: Doch.</h3>
+                        <p class="fragment"><small>Wir sind in der EU ansässig, also gelten alle unsere Verarbeitungen (auch wenn wir Auftragsverarbeiter für nicht in der EU ansässige Kunden sind) als innerhalb der EU, egal wo sie tatsächlich stattfinden.</small></p>
+                    </section>
+                    <section><h3>Weitere Fragen zum Geltungs-/Anwendungsbereich?</h3>
+                    </section>
+                </section>
+                <section>
+                    <section><h3>Grundsätze des Datenschutzrechts</h3>
+                    </section>
+                    <section><h3>Verbot mit Erlaubnisvorbehalt</h3>
+                        <ul>
+                            <li>Jede Verarbeitung personenbezogener Daten ist eigentlich verboten.</li>
+                            <li>Dieser Grundsatz hat zwei Ausnahmen:
+                                <ul>
+                                    <li>Die Person hat eingewilligt</li>
+                                    <li>Ein Gesetz erlaubt die Verarbeitung</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">Klassischer Fall der gesetzlichen Erlaubnis: Daten sind nötig zur Vertragserfüllung (Bankdaten, Adresse, etc. bei Versandhandel)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Datenschutzgrundsätze aus Art. 5</h3>
+                        <ul>
+                            <li>Zweckbindung</li>
+                            <li>Datenminimierung</li>
+                            <li>Richtigkeit</li>
+                            <li>Speicherbegrenzung</li>
+                            <li>Integrität und Vertraulichkeit</li>
+                            <li>Rechenschaftspflicht</li>
+                            <li class="fragment">(Kein Direkterhebungsgrundsatz mehr!)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Zweckbindung</h3>
+                        <ul>
+                            <li><b>Vor</b> dem Sammeln von personenbezogenen Daten muss klar sein, für was die Daten erhoben werden</li>
+                            <li>Gilt insbesondere, wenn die Daten aufgrund einer Einwilligung verarbeitet werden</li>
+                            <li>Die Zweckbindung gilt aber auch für aufgrund gesetzlicher Erlaubnis erhobene Daten</li>
+                            <li>In der Regel nicht Aufgabe des Dienstleisters, darauf zu achten</li>
+                        </ul>
+                    </section>
+                    <section><h3>Datenminimierung</h3>
+                        <ul>
+                            <li>Nur die Daten sammeln, die man unbedingt für die Zweckerfüllung braucht</li>
+                            <li>Möglichst nicht: erstmal alles auf Halde sammeln und dann schaut man später</li>
+                            <li>Ja, das macht Anwendungsbereiche wie ML nicht unbedingt einfacher, wo man anfangs häufig gar nicht weiß, was die interessantesten Komponenten sind</li>
+                        </ul>
+                    </section>
+                    <section><h3>Richtigkeit</h3>
+                        <ul>
+                            <li>Man könnte denken, dass veraltete Daten auch dem Datenschutz dienen (alte Adressen erschweren das Tracking, etc.)</li>
+                            <li>Die DSGVO sieht aber vor, dass personenbezogene Daten, <b>wenn</b> sie rechtmäßig gesammelt werden dürfen, auch richtig und aktuell sein müssen</li>
+                            <li>Ergo: schon von User-Seite her die Änderung und Löschen möglichst einfach machen</li>
+                            <li>Nicht: "um dieses Feld zu ändern, bitte Mail an Support schreiben"</li>
+                        </ul>
+                    </section>
+                    <section><h3>Speicherbegrenzung</h3>
+                        <ul>
+                            <li>Nur so lange speichern, wie es für die Zweckerfüllung unbedingt erforderlich ist</li>
+                            <li>Wenn in Verbindung stehende Daten darüber hinaus archiviert werden sollen, anonymisieren</li>
+                        </ul>
+                    </section>
+                    <section><h3>Exkurs: anonymisierte Daten</h3>
+                        <ul>
+                            <li>Zuordnung zu realer Person ist nur mit unverhältnismäßig großem Aufwand/Vorwissen möglich</li>
+                            <li>Pseudonymisierung ist keine Anonymisierung</li>
+                        </ul>
+                    </section>
+                    <section><h3>Integrität und Vertraulichkeit</h3>
+                        <ul>
+                            <li>Das ist der Punkt, welcher durch die "technischen und organisatorischen Maßnahmen" verwirklicht werden kann</li>
+                            <li>Angemessener Schutz der datenverarbeitenden Systeme</li>
+                            <li>Bei Auftragsverarbeitung: alle vorigen Punkte liegen größtenteils im Bereich des Auftraggebers, <b>hier</b> ist häufig der Auftragnehmer gefragt!</li>
+                        </ul>
+                    </section>
+                    <section><h3>Rechenschaftspflicht</h3>
+                        <ul>
+                            <li>Art. 5 Abs. 2: "Der Verantwortliche ist für die Einhaltung des Absatzes 1 verantwortlich und muss dessen Einhaltung nachweisen können"</li>
+                            <li>Heißt in der Regel: Dokumentation von Prozessen und deren Einhaltung</li>
+                            <li>Je leichter irgendwas technisch nachweisbar ist, desto besser für alle</li>
+                            <li>Beispiel: wenn es heißt, dass nur Pubkey-Auth für SSH-Zugänge genutzt wird, dann PW-Auth abschalten. Sowas lässt sich auch einfach testen.</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section><h3>Integrität und Vertraulichkeit</h3>
+                    </section>
+                    <section><h3>Moderne Passwortrichtlinien</h3>
+                        <ul>
+                            <li>Für fast alles: <b>Passwortmanager</b></li>
+                            <li>Sonst: ein paar Pass<b>phrasen</b> für Disk-Encryption, GPG-Keys und als Masterpasswort für PW-Manager</li>
+                            <li>lieber einfach zu merken und lang als mit vielen Sonderzeichen und kurz</li>
+                            <li>2FA für wichtige Services</li>
+                        </ul>
+                    </section>
+                    <section><h3>Display-Sichtschutz für Bahn und Flugzeug</h3>
+                        <ul>
+                            <li>Streng genommen ist schon das öffentliche Surfen im internen Wiki häufig ein Datenschutzverstoß, weil da häufig Realnamen drin stehen können</li>
+                            <li>Zusätzlich: automatisch und/oder manuell Rechner sperren, sobald man den Platz verlässt</li>
+                        </ul>
+                    </section>
+                    <section><h3>Firmware</h3>
+                        <ul>
+                            <li>Intel AMT und ähnliches deaktivieren</li>
+                            <li>Sich generell im Klaren darüber sein, zu was euer BIOS so in der Lage ist</li>
+                        </ul>
+                    </section>
+                    <section><h3>Betriebssystem und Updates</h3>
+                        <ul>
+                            <li>Windows und Mac: Aktuell mit Auto-Update</li>
+                            <li>Linux: regelmäßig auf aktuellen Stand bringen</li>
+                            <li>Alle Zugriffe idR mit normalen User-Rechten, sudo nur wenn nötig</li>
+                        </ul>
+                    </section>
+                    <section><h3>Festplattenverschlüsselung</h3>
+                        <ul>
+                            <li>Windows Pro: Bitlocker</li>
+                            <li>Mac: FileVault</li>
+                            <li>Linux: z.B. cryptsetup mit luks</li>
+                        </ul>
+                    </section>
+                    <section><h3>Backup</h3>
+                        <ul>
+                            <li>gut: vorhanden</li>
+                            <li>besser: verschlüsselt und offsite</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section><h3>Einschätzung des Kunden(projekts)</h3>
+                    </section>
+                    <section><h3>Datenschutzbeauftragter</h3>
+                        <ul>
+                            <li>Wer ist das und wie erreicht man ihn?</li>
+                            <li>Informationen im Intranet bereithalten</li>
+                        </ul>
+                    </section>
+                    <section><h3>Produktiv-Daten</h3>
+                        <ul>
+                            <li>Wer hat Kontrolle?</li>
+                            <li>Wo liegen die Daten?</li>
+                            <li>Immer im Hinterkopf behalten: es dreht sich alles weiterhin rein um <b>personenbezogene</b> Daten.</li>
+                        </ul>
+                    </section>
+                    <section><h3>Berechtigungen des Teams</h3>
+                        <ul>
+                            <li>Wer vergibt die Berechtigungen?</li>
+                            <li>Gibt es innerhalb des Teams ein gemeinsames Verständnis, nach welchem Prozess an die Produktiv-Daten gegangen wird?</li>
+                        </ul>
+                    </section>
+                    <section><h3>Betreibt man als Auftragnehmer irgendwelche Systeme für den Kunden?</h3>
+                        <ul>
+                            <li>Sind da zB Testdaten drauf? Wie sehen die aus?</li>
+                        </ul>
+                    </section>
+                    <section><h3>Freelancer im Team?</h3>
+                        <ul>
+                            <li>Müssen als Unterauftragnehmer in der Regel im Vertrag angegeben sein und müssen mit dem Hauptauftragnehmer wiederrum einen Vertrag über die Auftragsverarbeitung geschlossen haben</li>
+                        </ul>
+                    </section>
+                    <section><h3>Homeoffice?</h3>
+                        <ul>
+                            <li>Was sagt der AV-Vertrag zu Arbeiten außerhalb von Arbeitgeber- oder Kunden-Offices?</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section><h3>Technische und organisatorische Maßnahmen</h3>
+                    </section>
+                    <section><h3>Rechtsgrundlage DSGVO</h3>
+                        <ul>
+                            <li>Relevante Norm: Art. 32 DSGVO; Inhalt:</li>
+                            <ul>
+                                <li>Pseudonymisierung und Verschlüsselung personenbezogener Daten (lit a)</li>
+                                <li>Vertraulichkeit, Integrität, Verfügbarkeit und Belastbarkeit der Systeme und Dienste (lit b)</li>
+                                <li>Backup- und Wiederherstellungsfähigkeit (lit c)</li>
+                                <li>regelmäßigen Überprüfung, Bewertung und Evaluierung der Wirksamkeit der Maßnahmen (lit d)</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Verhältnis zu Anlage zu § 9 Satz 1 BDSG-alt</h3>
+                        <ul>
+                            <li>Zutrittskontrolle (neu: lit b)</li>
+                            <li>Zugangskontrolle (neu: lit a, b)</li>
+                            <li>Zugriffskontrolle (neu: lit b)</li>
+                            <li>Weitergabekontrolle (neu: lit b)</li>
+                            <li>Eingabekontrolle (neu: lit b)</li>
+                            <li>Auftragskontrolle (neu: Art. 32 Abs. 4)</li>
+                            <li>Verfügbarkeitskontrolle (neu: lit c)</li>
+                            <li>Trennungsgebot (neu: lit b)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Zutrittskontrolle</h3>
+                        <ul>
+                            <li>Hier geht es um den physischen Zugang zum Office. Ist abgeschlossen oder, wenn nicht, jemand am Empfang? Ist der Serverraum (sofern da Daten des Auftraggebers lagern) noch extra abgeschlossen?</li>
+                        </ul>
+                    </section>
+                    <section><h3>Zugangskontrolle</h3>
+                        <ul>
+                            <li>Rechner ist gesperrt, wenn grade keiner dran ist</li>
+                            <li>Rechner ist verschlüsselt, wenn er geklaut wird</li>
+                        </ul>
+                    </section>
+                    <section><h3>Zugriffskontrolle</h3>
+                        <ul>
+                            <li>Hier geht es um <i>berechtigten</i> Zugriff: Wenn jemand schon darf, <b>was</b> darf er dann alles?</li>
+                            <li>letztlich: Berechtigungskonzept</li>
+                        </ul>
+                    </section>
+                    <section><h3>Weitergabekontrolle</h3>
+                        <ul>
+                            <li>Transportweg-Sicherungen: idR geht es hier also um verschlüsselte Verbindung auf Kundensysteme, SSH, VPN, TLS, etc.</li>
+                            <li>Im Fall des tatsächlich physischen Transports (zB im Falle, dass ihr Screenshots/Logs aus Produktion lokal gespeichert habt fürs Debugging) greift wieder die Festplatten-Verschlüsselung</li>
+                        </ul>
+                    </section>
+                    <section><h3>Eingabekontrolle</h3>
+                        <ul>
+                            <li>Wenn ihr grundsätzlich in der Lage seid, personenbezogene Daten beim Kunden auch zu ändern (zB Zugriff auf Produktion), gibt es dann ein Logging dieser Änderungen? Kann also jemand im Nachhinein nachvollziehen, wer und wann irgendwelche Daten geändert hat?</li>
+                        </ul>
+                    </section>
+                    <section><h3>Auftragskontrolle</h3>
+                        <ul>
+                            <li>Einerseits, auf Auftragnehmer-Seite: sind die Mitarbeiter alle geschult und auf den Datenschutz verpflichtet?</li>
+                            <li>Andererseits, im Zusammenspiel mit Auftraggeber: werden Weisungen, die mit der Datenverarbeitung zu tun haben, ordentlich dokumentiert?</li>
+                        </ul>
+                    </section>
+                    <section><h3>Verfügbarkeitskontrolle</h3>
+                        <ul>
+                            <li>Backup- und Restore-Konzept. Ist für den Auftragnehmer nur interessant, wenn er für den Auftraggeber tatsächlich Systeme bereitstellt, auf denen Produktivdaten verarbeitet werden.</li>
+                            <li>(Backups von Geschäftsdaten machen aber grundsätzlich auch ohne DSGVO Sinn.)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Trennungsgebot</h3>
+                        <ul>
+                            <li>Unterschiedliche Daten (sei es aufgrund von Zweckbindung, besondere Kategorien von Daten etc.) müssen getrennt verarbeitet werden. Es reicht hier bereits eine logische Trennung (gleiche DB, verschiedene Tabellen). Liegt auch idR vollständig im Verantwortungsbereich des Auftraggebers.</li>
+                        </ul>
+                    </section>
+                </section>
+                <section><h3>Slides</h3>
+                    Die jeweils aktuellen Slides zu diesem Vortrag sind auf GitHub verfügbar: <a href="https://github.com/ciil/dsgvo">github.com/ciil/dsgvo</a>
+                </section>
+                <section>
+                    <section><h3>Bonus-Slides</h3>
+                        Marketing
+                    </section>
+                    <section><h3>Braucht man für jedes Kontaktformular wirklich eine Einwilligung?</h3>
+                        <ul>
+                            <ul>
+                                <li>Ich kann Daten natürlich auch aufgrund einer anderen Rechtsgrundlage (Art. 6 I lit. b-f) verarbeiten.</li>
+                                <li>Unterschied: eine Einwilligung gilt idR erstmal unbegrenzt (bis zum Widerruf)</li>
+                                <li>Bei allen Rechtsgrundlagen: Achtung Zweckbindung</li>
+                                <li>Wenn der Zweck wegfällt, unterliegen die Daten auf einmal einer Löschverpflichtung</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Braucht man für eine Eventanmeldung eine Einwilligung?</h3>
+                        <ul>
+                            <ul>
+                                <li>Nein, auch hier grundsätzlich nicht.</li>
+                                <li>Lässt sich erstmal schön auf Art. 6 I lit. b stützen</li>
+                                <li>Sobald das Event rum ist, müssen theoretisch alle Daten gelöscht sein (sind nicht mehr notwendig für die Durchführung)</li>
+                                <li class="fragment">(Eine Abschlussmail mag zulässig sein.)</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Stete Grundsatzfrage: Was will ich denn damit anstellen?</h3>
+                        <ul>
+                            <ul>
+                                <li>Zweckbindung ist das A und O</li>
+                                <li>Verhindert immer genau das "Ich hab die Daten ja schon, also kann ich jetzt Werbung machen"</li>
+                                <li>Teileinwilligungen sind ... möglich, aber recht schwierig richtig hinzubekommen</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Art. 6 I lit. f</h3>
+                        <ul>
+                            <ul>
+                                <li>Zwei Meinungen: 1. Super Auffangtatbestand!! 2. OMG, kann keiner einschätzen, voll unsicher!!</li>
+                                <li>Bis jetzt eigentlich kein Mittelweg erkennbar</li>
+                                <li>Interessenabwägung gerade im werblichen Bereich anders bei Verbrauchern und gewerblichen Kunden</li>
+                                <li>Den Unterschied automatisiert erkennen wahrscheinlich schwierig</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Eventfotographie zu PR-Zwecken</h3>
+                        <ul>
+                            <ul>
+                                <li>Verhältnis zw. KUG und DSGVO gerade Thema heißer Debatten</li>
+                                <li>Wohl noch einer der Punkte, an denen Art. 6 I lit. f am ehesten greifen könnten</li>
+                                <li>Trotzdem wohl zumindest Informationspflichten: bei E-Mail-Bestätigung/Online-Anmeldung auch kein unverhältnismäßig großer Aufwant (EG 62)</li>
+                                <li>Widerspruch anders als bei KUG wohl stets möglich</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section><h3>Eventfotographie zu PR-Zwecken (Teil 2)</h3>
+                        <ul>
+                            <ul>
+                                <li>Je kleiner die Veranstaltung, desto stärker müssen Regelungen beachtet werden</li>
+                                <li>Rechte von Personen, die offensichtlich nicht fotographiert werden wollen, beachten</li>
+                                <li>Möglichst keine Namensnennung am Foto (Foto trotzdem pers.b. Daten)</li>
+                                <li>Situation beachten, keine Fotos von Personen mit Bier in der Hand etc.</li>
+                            </ul>
+                        </ul>
+                    </section>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
