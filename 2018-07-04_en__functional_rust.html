@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>functional rust</title>
+
+		<link rel="stylesheet" href="reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="reveal.js/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section><h2>functional rust</h2>
+                </section>
+                <section><h3>about</h3>
+                    <p>simon lackerbauer
+                        <small>
+                            <ul>
+                                <li>day job: operations engineer @ <a href="https://github.com/mayflower">github.com/mayflower</a></li>
+                                <li>mostly: nix, python, haskell</li>
+                                <li><a href="https://github.com/ciil">github.com/ciil</a></li>
+                            </ul>
+						</small>
+                    </p>
+                </section>
+                <section>
+                    <section><h2>rust intro</h2></section>
+                    <section><h3>facts</h3>
+                        <ul>
+                            <li>multi-paradigm
+                                <ul>
+                                    <li>compiled</li>
+                                    <li>concurrent</li>
+                                    <li><span class="fragment highlight-current-blue">functional<span></li>
+                                    <li>imperative</li>
+                                    <li>generic</li>
+                                </ul>
+                            </li>
+                            <li>statically, strongly typed</li>
+                        </ul>
+                    </section>
+                    <section><h3>known for</h3>
+                        <ul>
+                            <li>high level abstractions with low level performance</li>
+                            <li>great compiler error messages</li>
+                            <li>memory safety and concurrency</li>
+                            <li><a href="https://github.com/uutils">uutils</a> (esp. <a href="https://github.com/uutils/coreutils">uutils/coreutils</a>)</li>
+                            <li>ripgrep, exa, ...</li>
+                            <li>Mozilla Firefox/Quantum engine</li>
+                            <li>not so much: being the go-to language for functional programmers</li>
+                        </ul>
+                    </section>
+                    <section><p><small>... and for winning Witch Weekly's Most Charming Smile Award* three years in a row**</small></p>
+                        <img src="../imgs/functional_rust/gilderoy_lockhart.jpg" width="50%" />
+                        <p class="fragment"><small>* first place for "most loved programming language" in the Stack Overflow Developer Survey in 2016, 2017, and 2018</small></p>
+                        <p class="fragment"><small>** Harry Potter would rather use Malbolge o.O</small></p>
+                    </section>
+                </section>
+                <section>
+                    <section><h2>examples</h2></section>
+                    <section><h3>hello world</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn main() {
+                                println!("Hello World");
+                            }
+                        </code></pre>
+                    </section>
+                    <section><h3>immutability</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn main() {
+                                let foo = "bar";
+                                foo = "baz";
+                            }   
+                        </code></pre>
+                        output: 
+                        <pre><code class="hljs rust" data-trim>
+							error[E0384]: cannot assign twice to immutable variable `foo`
+							 --> src/main.rs:3:5
+							  |
+							2 |     let foo = "bar";
+							  |         --- first assignment to `foo`
+							3 |     foo = "baz";
+							  |     ^^^^^^^^^^^ cannot assign twice to immutable variable
+                        </code></pre>
+                    </section>
+                    <section><h3>mutability</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn main() {
+                                let mut foo = "bar";
+                                foo = "baz";
+                            } 
+                        </code></pre>
+                    </section>
+                    <section><h3>ownership</h3>
+                        <ul>
+                            <li>very important concept in Rust</li>
+                            <li>each value has a variable that's called its owner</li>
+                            <li>there can only be one owner</li>
+                            <li>when the owner goes out of scope, the value will be dropped</li>
+                        </ul>
+                    </section>
+                    <section><h3>scope</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn main() {
+                                {
+                                    let mut foo = "bar";
+                                }
+                                foo = "baz";
+                            }   
+                        </code></pre>
+                        output: 
+                        <pre><code class="hljs rust" data-trim>
+							error[E0425]: cannot find value `foo` in this scope
+							  --> src/main.rs:23:5
+							   |
+							23 |     foo = "baz";
+							   |     ^^^ not found in this scope
+                        </code></pre>
+                    </section>
+                    <section><h3>factorial (imperative)</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn factorial(i: u64) -> u64 {
+                                let mut acc = 1;
+                                for num in 2..i+1 {
+                                    acc *= num;
+                                }
+                                acc
+                            }
+                        </code></pre>
+                    </section>
+                    <section><h3>factorial (recursive)</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn factorial(i: u64) -> u64 {
+                                match i {
+                                    0 => 1,
+                                    n => n * factorial(n-1)
+                                }
+                            }
+                        </code></pre>
+                    </section>
+                    <section><h3>factorial (tail recursive)</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            fn factorial(i: u64) -> u64 {
+                                fn fact_tr(i: u64, acc: u64) -> u64 {
+                                    match i { 
+                                        0 => acc,
+                                        n => fact_tr(n-1, n*acc)
+                                    }   
+                                }   
+                                fact_tr(i, 1)
+                            }   
+                        </code></pre>
+                    </section>
+                    <section><h3>common types</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let i: i32 = 35;
+                            let j: f32 = 3.0;
+                            let heart_eyed_cat = '😻';
+                            let nope: Option&lt;i32&gt; = None;
+                            let konnichiwa = "こんにちは";
+                            let maybe = Some(5);
+                            let test = nope &lt; maybe;
+                            println!("{} {}", test, konnichiwa);
+                        </code></pre>
+                        output: 
+                        <pre><code class="hljs rust" data-trim>
+                            true こんにちは
+                        </code></pre>
+                    </section>
+                    <section><h3>structs</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            struct Rectangle {
+                                width: u32,
+                                height: u32,
+                            }
+                            impl Rectangle {
+                                fn area(&amp;self) -> u32 {
+                                    self.width * self.height
+                                }
+                            }
+                            let rect1 = Rectangle { width: 30, height: 50 };
+                            println!("The area of the rectangle is {} square pixels.", rect1.area());
+                        </code></pre>
+                        output: 
+                        <pre><code class="hljs rust" data-trim>
+                            The area of the rectangle is 1500 square pixels.
+                        </code></pre>
+                    </section>
+                    <section><h3>vectors</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let mut vector: Vec&lt;i32&gt; = vec![1, 2, 3, 4];
+                            vector.push(5);
+                            println!("{}", &amp;vector[4]);
+                        </code></pre>
+                        output: 
+                        <pre><code class="hljs rust" data-trim>
+                            5
+                        </code></pre>
+                    </section>
+                    <section><h3>closures</h3>
+                        <pre><code class="hljs rust" data-trim>
+							fn  add_one_v1   (x: u32) -> u32 { x + 1 }
+							let add_one_v2 = |x: u32| -> u32 { x + 1 };
+							let add_one_v3 = |x|             { x + 1 };
+							let add_one_v4 = |x|               x + 1  ;
+                        </code></pre>
+                        <ul>
+                            <li>a little like anonymous functions</li>
+                            <li>with some strange limitations</li>
+                        </ul>
+                    </section>
+                    <section><h3>closures pt2</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let id = |x| x;
+                            println!("{} {}", id(5), id("foo"));
+                        </code></pre>
+                        expected output from a functional standpoint (like Haskell): 
+                        <pre><code class="hljs rust" data-trim>
+							Prelude> let id = (\x -> x)
+							id :: p -> p
+							Prelude> id 5
+							5
+							it :: Num p => p
+							Prelude> id "foo"
+							"foo"
+							it :: [Char]
+                        </code></pre>
+                    </section>
+                    <section><h3>closures pt3</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let id = |x| x;
+                            println!("{} {}", id(5), id("foo"));
+                        </code></pre>
+                        actual output: 
+                        <pre><code class="hljs rust" data-trim>
+							error[E0308]: mismatched types
+							  --> src/main.rs:56:30
+							   |
+							56 |     println!("{} {}", id(5), id("foo"));
+							   |                                 ^^^^^ expected integral variable, found reference
+							   |
+							   = note: expected type `{integer}`
+							              found type `&amp;'static str`
+                        </code></pre>
+                    </section>
+                    <section><h3>iterators</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let v = vec![1, 2, 3];
+                            let v_iter = v.iter().map(|x| x + 1);
+                            let v_iter2 = v.iter().fold(0, |acc, &amp;x| acc + x);
+                            println!("{} {}", v_iter, v_iter2)
+                        </code></pre>
+                        expected output from a functional standpoint (like Haskell): 
+                        <pre><code class="hljs rust" data-trim>
+                            Prelude> map (\x -> x+1) [1,2,3,4]
+                            [2,3,4,5]
+                        </code></pre>
+                    </section>
+                    <section><h3>iterators</h3>
+                        <pre><code class="hljs rust" data-trim>
+                            let v = vec![1, 2, 3];
+                            let v_iter = v.iter().map(|x| x + 1);
+                            let v_iter2 = v.iter().fold(0, |acc, &amp;x| acc + x);
+                            println!("{} {}", v_iter, v_iter2)
+                        </code></pre>
+                        actual output: 
+                        <pre><code class="hljs rust" data-trim>
+							error[E0277]: `std::slice::Iter<'_, {integer}>` doesn't implement `std::fmt::Display`
+							  --> src/main.rs:62:20
+							   |
+							62 |     println!("{} {}", v_iter, v_iter2)
+							   |                       ^^^^^^ `std::slice::Iter<'_, {integer}>` cannot be formatted with the default formatter; try using `:?` instead if you are using a format string                   
+							   |
+							   = help: the trait `std::fmt::Display` is not implemented for `std::slice::Iter<'_, {integer}>`
+							   = note: required by `std::fmt::Display::fmt`
+                        </code></pre>
+                    </section>
+                    <section><h3>in conclusion: rust as a functional programming language</h3>
+                        <ul>
+                            <li class="fragment">Rust can be hard to use in a purely functional manner</li>
+                            <li class="fragment">some ideosyncracies for people with experience in other functional languages</li>
+                            <li class="fragment">augmenting systems programming with functional concepts in otherwise object-oriented/imperative code is still helpful</li>
+                        </ul>
+                    </section>
+                    <section><h2>extra slides: io monad: burrito</h2></section>
+                    <section>
+                        <ul>
+                            <li>these limitations don't discourage some people</li>
+                            <li><a href="https://github.com/withoutboats/burrito">withoutboats/burrito</a> implements an IO monad conceptually similar to Haskell's IO monad</li>
+                            <li>obviously more a joke/conceptual implementation that just wraps Rust's std::io</li>
+                        </ul>
+                    </section>
+                    <section><h3>use burrito</h3>
+                        <pre><code class="hljs rust" data-trim>
+                        extern crate burrito;
+                        fn main() {
+                            use burrito::burrito;
+                            burrito().read_line().and_then(|echo, burrito| burrito.print_line(&echo));
+                        }
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h2>thanks for your attention</h2>
+                    <p>inspired by Lisa Passing: <a href="https://www.youtube.com/watch?v=Ve8HUfU3ELQ">Functional Rust - An Exploration @ Lambda Days 2018</a></p>
+                    <p>slides: <a href="https://github.com/ciil/talks">github.com/ciil/talks</a></p>
+                </section>
+			</div>
+		</div>
+
+		<script src="reveal.js/lib/js/head.min.js"></script>
+		<script src="reveal.js/js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'reveal.js/plugin/markdown/marked.js' },
+					{ src: 'reveal.js/plugin/markdown/markdown.js' },
+					{ src: 'reveal.js/plugin/notes/notes.js', async: true },
+					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
