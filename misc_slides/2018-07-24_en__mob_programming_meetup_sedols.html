@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Mob Programming</title>
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : 'revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section><h2>Mob Programming Coding Dojo #3</h2>
+                    <p>Munich Lambda</p>
+                    <p>Munich Software Craft Community</p>
+                </section>
+                <section>
+                    <section><h3>Mob Programming Intro</h3>
+                        <p>All the brilliant people working on the same thing, at the same time, in the same space, and on the same computer</p>
+                    </section>
+                    <section><h3>Roles</h3>
+                        <ul>
+                            <li>Driver</li>
+                            <li>Navigator</li>
+                            <li>Mob</li>
+                            <li>(Docs-Lookup-Guy)</li>
+                        </ul>
+                    </section>
+                    <section><h3>Driver</h3>
+                        <ul>
+                            <li>The only one that touches the keyboard</li>
+                            <li>No own input</li>
+                            <li>writes what the others tell him to</li>
+                        </ul>
+                    </section>
+                    <section><h3>Navigator</h3>
+                        <ul>
+                            <li>Part of the mob</li>
+                            <li>If there are two or more possible approaches going forward, decides on the one that's implemented</li>
+                        </ul>
+                    </section>
+                    <section><h3>Mob</h3>
+                        <ul>
+                            <li>Brings knowledge, differing approaches and differing points-of-view to the table</li>
+                            <li>And also fun!</li>
+                        </ul>
+                    </section>
+                    <section><h3>Docs-Lookup-Guy</h3>
+                        <ul>
+                            <li>Part of the mob</li>
+                            <li>If there are two projectors/displays, one can be used to search for docs in parallel</li>
+                        </ul>
+                    </section>
+                    <section><h3>Time-Keeping</h3>
+                        <ul>
+                            <li>The whole room rotates places every 7 minutes</li>
+                            <li>The person sitting in front of the laptop is now the new Driver</li>
+                            <li>The person sitting on the former Navigator's seat is the new Navigator</li>
+                            <li>Only one direction!</li>
+                        </ul>
+                    </section>
+                    <section><h3>Online development environment</h3>
+                        <ul>
+                            <li>URL: <a href="http://cyber-dojo.org">cyber-dojo.org</a></li>
+                            <li>Also linked on the meetup page</li>
+                            <li>Provides easy to use development and testing environment for a lot of languages</li>
+                            <li>Test-Driven ftw!</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section><h3>Kata</h3>
+                        <p>SEDOLs</p>
+                    </section>
+                    <section><h3>SEDOLs</h3>
+                        <p>SEDOL stands for <i>Stock Exchange Daily Official List</i>, a list of security identifiers used in the United Kingdom and Ireland for clearing purposes.</p>
+                        <p>A typical SEDOL looks like this: <b>0263494</b>. SEDOLs can also hold upper case letters.</p>
+                        <p>The last digit (in the example above: <b>4</b>) is a check digit.</p>
+                    </section>
+                    <section><h3>SEDOLs</h3>
+                        <p>We want to evaluate whether a given 7-character alphanumeric string is a correct SEDOL.</p>
+                        <p>For this, we simply need to calculate a weighted sum for the first six characters (weights are: 1, 3, 1, 7, 3, 9) and choose a check digit such that the weighted sum plus check digit is divisible by 10.</p>
+                        <p>A full example can be found on <a href="https://en.wikipedia.org/wiki/SEDOL">Wikipedia</a>. A list of proper SEDOLs can be found on <a href="https://rosettacode.org/wiki/SEDOLs">Rosettacode</a>. Some 7-digit strings that are not SEDOLs: B0YBKL4, 5852845, 7108895.</p>
+                    </section>
+                    <section><h3>Multiple Languages</h3>
+                        <p>As this Kata is fairly short, each team should choose 2-3 languages (ideally following different paradigms) in which to implement the same Kata.</p>
+                        <p>Or resolve the Kata in the same language using multiple paradigms.</p>
+                        <p>To give a framework for the classic approaches Functional or Object-Oriented, try to follow the rules in <a href="https://williamdurand.fr/2013/06/03/object-calisthenics/">Object Calisthenics</a> and <a href="https://blog.ninjaferret.co.uk/2015/06/05/Introducing-Functional-Calisthenics.html">Functional Calisthenics</a>.
+                    </section>
+                </section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/../reveal.js#configuration
+			// - https://github.com/hakimel/../reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: '../reveal.js/plugin/markdown/marked.js' },
+					{ src: '../reveal.js/plugin/markdown/markdown.js' },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true },
+					{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
